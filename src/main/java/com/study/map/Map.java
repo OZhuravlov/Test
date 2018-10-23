@@ -1,17 +1,30 @@
 package com.study.map;
 
-public interface Map extends Iterable {
-    Object put(Object key, Object value);
+public interface Map<K,V> extends Iterable<Map.Entry<K, V>> {
+    V put(K key, V value);
 
-    void putAll(Map map);
+    void putAll(Map<K, V> map);
 
-    Object putIfAbsent(Object key, Object value);
+    V putIfAbsent(K key, V value);
 
-    Object get(Object key);
+    V get(K key);
 
-    Object remove(Object key);
+    V remove(K key);
 
     int size();
 
-    boolean containsKey(Object key);
+    boolean containsKey(K key);
+
+    int getBucketCount();
+
+
+    interface Entry<K, V>{
+
+        K getKey();
+
+        V getValue();
+
+        void setValue(V value);
+
+    }
 }

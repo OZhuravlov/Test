@@ -4,11 +4,11 @@ import java.util.*;
 
 import static java.lang.Math.abs;
 
-public class HashMap implements Map, Iterable {
+public class HashMap<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>> {
 
     private final static int DEFAULT_INITIAL_BUCKETS_QUANTITY = 3;
     private final static double DEFAULT_LOAD_FACTOR = 0.5;
-    private List[] buckets;
+    private List<Map.Entry<K, V>>[] buckets;
     private int size;
 
     private double loadFactor;
@@ -25,16 +25,16 @@ public class HashMap implements Map, Iterable {
             throw new IllegalArgumentException("loadFactor must be in range(0 ; 1]");
         }
         this.loadFactor = loadFactor;
-        buckets = new List[bucketsQuantity];
+        buckets = (List<Map.Entry<K, V>>[]) new List[bucketsQuantity];
     }
 
     // Both key and value could be null
     @Override
-    public Object put(Object key, Object value) {
+    public V put(K key, V value) {
         checkAndGrow();
         int index = getIndex(key);
         if (buckets[index] == null) {
-            buckets[index] = new ArrayList();
+            buckets[index] = new ArrayList<>();
         }
         List bucket = buckets[index];
         if (!containsKey(key)) {
@@ -42,23 +42,22 @@ public class HashMap implements Map, Iterable {
             size++;
             return null;
         }
-        Entry entry = getEntry(key, bucket);
-        Object oldValue = entry.value;
-        entry.value = value;
+        Map.Entry<K, V> entry = getEntry(key, bucket);
+        V oldValue = entry.getValue();
+        entry.setValue(value);
         return oldValue;
     }
 
     @Override
-    public void putAll(Map map) {
-        for (Object entryObject : map
-        ) {
-            Entry entry = (Entry) entryObject;
-            put(entry.key, entry.value);
+    public void putAll(Map<K, V> map) {
+        for (Map.Entry<K, V> entry : map
+                ) {
+            put(entry.getKey(), entry.getValue());
         }
     }
 
     @Override
-    public Object putIfAbsent(Object key, Object value) {
+    public V putIfAbsent(K key, V value) {
         if (!containsKey(key)) {
             return put(key, value);
         }
@@ -66,27 +65,27 @@ public class HashMap implements Map, Iterable {
     }
 
     @Override
-    public Object get(Object key) {
+    public V get(K key) {
         if (!containsKey(key)) {
             return null;
         }
         int index = getIndex(key);
-        List bucket = buckets[index];
-        Entry entry = getEntry(key, bucket);
-        return entry.value;
+        List<Map.Entry<K, V>> bucket = buckets[index];
+        Map.Entry<K, V> entry = getEntry(key, bucket);
+        return entry.getValue();
     }
 
     @Override
-    public Object remove(Object key) {
+    public V remove(K key) {
         int index = getIndex(key);
-        List bucket = buckets[index];
-        Iterator bucketIterator = bucket.iterator();
+        List<Map.Entry<K, V>> bucket = buckets[index];
+        Iterator<Map.Entry<K, V>> bucketIterator = bucket.iterator();
         while (bucketIterator.hasNext()) {
-            Entry entry = (Entry) bucketIterator.next();
-            if ((key == null && entry.key == null) || Objects.equals(key, entry.key)) {
+            Map.Entry<K, V> entry = bucketIterator.next();
+            if ((key == null && entry.getKey() == null) || Objects.equals(key, entry.getKey())) {
                 bucketIterator.remove();
                 size--;
-                return entry.value;
+                return entry.getValue();
             }
         }
         return null;
@@ -98,9 +97,9 @@ public class HashMap implements Map, Iterable {
     }
 
     @Override
-    public boolean containsKey(Object key) {
+    public boolean containsKey(K key) {
         int index = getIndex(key);
-        List bucket = buckets[index];
+        List<Map.Entry<K, V>> bucket = buckets[index];
         return getEntry(key, bucket) != null;
     }
 
@@ -109,10 +108,9 @@ public class HashMap implements Map, Iterable {
             return;
         }
         int newBucketsCapacity = buckets.length * 2;
-        List[] newBuckets = new List[newBucketsCapacity];
-        for (Object entryObj : this) {
-            Entry entry = (Entry) entryObj;
-            int newBucketIndex = (entry.key == null) ? 0 : abs(entry.key.hashCode() % newBucketsCapacity);
+        List<Map.Entry<K, V>>[] newBuckets = (List<Map.Entry<K, V>>[]) new List[newBucketsCapacity];
+        for (Map.Entry<K, V> entry : this) {
+            int newBucketIndex = (entry.getKey() == null) ? 0 : abs(entry.getKey().hashCode() % newBucketsCapacity);
             if (newBuckets[newBucketIndex] == null) {
                 newBuckets[newBucketIndex] = new ArrayList();
             }
@@ -121,17 +119,16 @@ public class HashMap implements Map, Iterable {
         buckets = newBuckets;
     }
 
-    private int getIndex(Object key) {
+    private int getIndex(K key) {
         return (key == null) ? 0 : abs(key.hashCode() % buckets.length);
     }
 
-    private Entry getEntry(Object key, List bucket) {
+    private Map.Entry getEntry(K key, List<Map.Entry<K, V>> bucket) {
         if (bucket == null) {
             return null;
         }
-        for (Object entryObject : bucket) {
-            Entry entry = (Entry) entryObject;
-            if ((key == null && entry.key == null) || Objects.equals(entry.key, key)) {
+        for (Map.Entry<K, V> entry : bucket) {
+            if ((key == null && entry.getKey() == null) || Objects.equals(entry.getKey(), key)) {
                 return entry;
             }
 
@@ -156,24 +153,24 @@ public class HashMap implements Map, Iterable {
         return new MyKeyIterator();
     }
 
-    public static class Entry {
+    public static class Entry<K, V> implements Map.Entry<K, V> {
 
-        private Object key;
-        private Object value;
+        private K key;
+        private V value;
 
-        public Object getKey() {
+        public K getKey() {
             return key;
         }
 
-        public Object getValue() {
+        public V getValue() {
             return value;
         }
 
-        public void setValue(Object value) {
+        public void setValue(V value) {
             this.value = value;
         }
 
-        public Entry(Object key, Object value) {
+        public Entry(K key, V value) {
             this.key = key;
             this.value = value;
         }
@@ -207,4 +204,5 @@ public class HashMap implements Map, Iterable {
         }
 
     }
+
 }

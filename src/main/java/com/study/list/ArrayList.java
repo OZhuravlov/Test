@@ -3,24 +3,24 @@ package com.study.list;
 import java.util.Iterator;
 import java.util.StringJoiner;
 
-public class ArrayList implements List, Iterable {
+public class ArrayList<E> implements List<E>, Iterable<E> {
 
-    private Object[] array;
+    private E[] array;
     private int size = 0;
 
     public ArrayList() {
-        array = new Object[10];
+        array = (E[]) new Object[10];
     }
 
     @Override
-    public void add(Object value) {
+    public void add(E value) {
         ensureCapacity();
         array[size] = value;
         size++;
     }
 
     @Override
-    public void add(Object value, int index) {
+    public void add(E value, int index) {
         if (index == size) {
             add(value);
             return;
@@ -33,9 +33,9 @@ public class ArrayList implements List, Iterable {
     }
 
     @Override
-    public Object remove(int index) {
+    public E remove(int index) {
         checkIndex(index);
-        Object value = array[index];
+        E value = array[index];
         if(index < size){
             System.arraycopy(array, index + 1, array, index, size - index - 1);
         }
@@ -45,13 +45,13 @@ public class ArrayList implements List, Iterable {
     }
 
     @Override
-    public Object get(int index) {
+    public E get(int index) {
         checkIndex(index);
         return array[index];
     }
 
     @Override
-    public Object set(Object value, int index) {
+    public E set(E value, int index) {
         checkIndex(index);
         array[index] = value;
         return array[index];
@@ -73,12 +73,12 @@ public class ArrayList implements List, Iterable {
     }
 
     @Override
-    public boolean contains(Object value) {
+    public boolean contains(E value) {
         return indexOf(value) >= 0;
     }
 
     @Override
-    public int indexOf(Object value) {
+    public int indexOf(E value) {
         for (int i = 0; i < size; i++) {
             if(array[i].equals(value)) {
                 return i;
@@ -88,7 +88,7 @@ public class ArrayList implements List, Iterable {
     }
 
     @Override
-    public int lastIndexOf(Object value) {
+    public int lastIndexOf(E value) {
         for (int i = size-1; i >= 0; i--) {
             if(array[i].equals(value)) {
                 return i;
@@ -105,7 +105,7 @@ public class ArrayList implements List, Iterable {
 
     private void ensureCapacity() {
         if(size == array.length){
-            Object[] newArray = new Object[array.length * 3 / 2];
+            E[] newArray = (E[]) new Object[array.length * 3 / 2];
             System.arraycopy(array, 0, newArray, 0, array.length);
             array = newArray;
         }
@@ -114,8 +114,9 @@ public class ArrayList implements List, Iterable {
     @Override
     public String toString() {
         StringJoiner stringJoiner = new StringJoiner(", ", "ArrayList [", "]");
-        for (int i = 0; i < size; i++) {
-            stringJoiner.add((String)array[i]);
+
+        for (E element : this) {
+            stringJoiner.add(element.toString());
         }
         return stringJoiner.toString();
     }
@@ -137,7 +138,7 @@ public class ArrayList implements List, Iterable {
         }
 
         @Override
-        public Object next() {
+        public E next() {
             return array[i++];
         }
     }

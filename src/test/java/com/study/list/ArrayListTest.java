@@ -9,7 +9,7 @@ import static org.junit.Assert.assertTrue;
 public class ArrayListTest {
     @Test
     public void testAddAndGetAndRemove() {
-        List arrayList = new ArrayList();
+        List<String> arrayList = new ArrayList<>();
         arrayList.add("A");
         arrayList.add("B");
         arrayList.add("C");
@@ -32,7 +32,7 @@ public class ArrayListTest {
 
     @Test
     public void testAddAndGetByIndex() {
-        List arrayList = new ArrayList();
+        List<String> arrayList = new ArrayList<>();
         arrayList.add("A");
         arrayList.add("B");
         arrayList.add("C");
@@ -48,20 +48,20 @@ public class ArrayListTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testRemoveNonExistingElement() {
-        List arrayList = new ArrayList();
+        List<String> arrayList = new ArrayList<>();
         arrayList.add("A");
         arrayList.remove(1);
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testRemoveOnEmptyList() {
-        List arrayList = new ArrayList();
+        List<String> arrayList = new ArrayList<>();
         arrayList.remove(0);
     }
 
     @Test
     public void testAddAndSet() {
-        List arrayList = new ArrayList();
+        List<String> arrayList = new ArrayList<>();
         arrayList.add("A");
         arrayList.add("B");
         arrayList.add("C");
@@ -73,7 +73,7 @@ public class ArrayListTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testClear() {
-        List arrayList = new ArrayList();
+        List<String> arrayList = new ArrayList<>();
         arrayList.add("A");
         arrayList.add("B");
         arrayList.add("C");
@@ -85,7 +85,7 @@ public class ArrayListTest {
 
     @Test
     public void testIsEmply() {
-        List arrayList = new ArrayList();
+        List<String> arrayList = new ArrayList<>();
         assertTrue("isEmpty", arrayList.isEmpty());
         arrayList.add("A");
         assertFalse("isNotEmpty", arrayList.isEmpty());
@@ -93,7 +93,7 @@ public class ArrayListTest {
 
     @Test
     public void testContains() {
-        List arrayList = new ArrayList();
+        List<String> arrayList = new ArrayList<>();
         arrayList.add("A");
         arrayList.add("B");
         arrayList.add("C");
@@ -105,7 +105,7 @@ public class ArrayListTest {
 
     @Test
     public void testIndexOf() {
-        List arrayList = new ArrayList();
+        List<String> arrayList = new ArrayList<>();
         arrayList.add("A");
         arrayList.add("B");
         arrayList.add("B");
@@ -117,7 +117,7 @@ public class ArrayListTest {
 
     @Test
     public void testLastIndexOf() {
-        List arrayList = new ArrayList();
+        List<String> arrayList = new ArrayList<>();
         arrayList.add("A");
         arrayList.add("B");
         arrayList.add("B");
@@ -129,7 +129,7 @@ public class ArrayListTest {
 
     @Test
     public void testToString() {
-        List arrayList = new ArrayList();
+        List<String> arrayList = new ArrayList<>();
         arrayList.add("A");
         arrayList.add("B");
         arrayList.add("C");
@@ -139,7 +139,7 @@ public class ArrayListTest {
 
     @Test
     public void testIteration() {
-        ArrayList arrayList = new ArrayList();
+        List<String> arrayList = new ArrayList<>();
         arrayList.add("A");
         arrayList.add("B");
         arrayList.add("C");

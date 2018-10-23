@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 public class HashMapTest {
     @Test
     public void testPutAndGet() {
-        Map map = new HashMap();
+        Map<String, String> map = new HashMap<>();
         assertNull(map.put("user", "Ann"));
         assertEquals("Ann", map.put("user", "john"));
         assertEquals(1, map.size());
@@ -18,7 +18,7 @@ public class HashMapTest {
 
     @Test
     public void testPutAndGetNullKey() {
-        Map map = new HashMap();
+        Map<String, String> map = new HashMap<>();
         assertNull(map.put(null, "john"));
         assertEquals(1, map.size());
         assertEquals("john", map.get(null));
@@ -29,7 +29,7 @@ public class HashMapTest {
 
     @Test
     public void testPutAndGetNullValue() {
-        Map map = new HashMap();
+        Map<String, String> map = new HashMap<>();
         assertNull(map.put("user", null));
         assertEquals(1, map.size());
         assertNull(map.get("user"));
@@ -37,7 +37,7 @@ public class HashMapTest {
 
     @Test
     public void testPutIfAbsentAndGet() {
-        Map map = new HashMap();
+        Map<String, String> map = new HashMap<>();
         assertNull(map.put("user", "Kate"));
         assertEquals(1, map.size());
         assertEquals("Kate", map.putIfAbsent("user", "Sam"));
@@ -50,7 +50,7 @@ public class HashMapTest {
 
     @Test
     public void testPutAll() {
-        Map map = new HashMap();
+        Map<String, String> map = new HashMap<>();
         Map map2 = new HashMap();
 
         map.put("user", "john");
@@ -70,7 +70,7 @@ public class HashMapTest {
 
     @Test
     public void testPutAndRemove() {
-        Map map = new HashMap();
+        Map<String, String> map = new HashMap<>();
         map.put("password", "test");
         assertEquals("test", map.remove("password"));
         assertEquals(0, map.size());
@@ -78,37 +78,32 @@ public class HashMapTest {
 
     @Test
     public void testIterator() {
-        HashMap hashMap = new HashMap();
-
-        List expectedArray = new ArrayList();
+        Map<String, String> hashMap = new HashMap<>();
+        List<String> expectedArray = new ArrayList<>();
         expectedArray.add("A");
         expectedArray.add("B");
         expectedArray.add("C");
-        for (Object element : expectedArray) {
-            String key = (String)element;
+        for (String key : expectedArray) {
             hashMap.put(key, "value " + key);
         }
         List array = new ArrayList();
-        for (Object entryObj : hashMap) {
-            HashMap.Entry entry = (HashMap.Entry)entryObj;
+        for (Map.Entry<String, String> entry : hashMap) {
             array.add(entry.getKey());
         }
         assertEquals(hashMap.size(), array.size());
-        for (Object element: expectedArray) {
+        for (String element: expectedArray) {
             assertTrue(array.contains(element));
         }
     }
 
     @Test
     public void testCheckAndGrow() {
-        HashMap hashMap = new HashMap();
-
-        List expectedArray = new ArrayList();
+        Map<String, String> hashMap = new HashMap<>();
+        List<String> expectedArray = new ArrayList<>();
         expectedArray.add("A");
         expectedArray.add("B");
 
-        for (Object element : expectedArray) {
-            String key = (String)element;
+        for (String key : expectedArray) {
             hashMap.put(key, "value " + key);
         }
         assertEquals(3, hashMap.getBucketCount());
@@ -117,14 +112,13 @@ public class HashMapTest {
         hashMap.put("D", "value D" );
         assertEquals(6, hashMap.getBucketCount());
 
-        List array = new ArrayList();
-        for (Object entryObject : hashMap) {
-            HashMap.Entry entry = (HashMap.Entry)entryObject;
+        List<String> array = new ArrayList<>();
+        for (Map.Entry<String, String> entry : hashMap) {
             array.add(entry.getKey());
         }
 
         assertEquals(hashMap.size(), array.size());
-        for (Object element: expectedArray) {
+        for (String element: expectedArray) {
             assertTrue(array.contains(element));
         }
     }

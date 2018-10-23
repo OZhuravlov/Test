@@ -4,15 +4,15 @@ import java.util.Iterator;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class LinkedList implements List, Iterable{
+public class LinkedList<E> implements List<E>, Iterable<E>{
 
-    private Node head;
-    private Node tail;
+    private Node<E> head;
+    private Node<E> tail;
     private int size;
 
 
-    public void add(Object value) {
-        Node newNode = new Node(value);
+    public void add(E value) {
+        Node<E> newNode = new Node<>(value);
         if (size == 0) {
             head = tail = newNode;
         } else {
@@ -24,7 +24,7 @@ public class LinkedList implements List, Iterable{
     }
 
 
-    public void add(Object value, int index) {
+    public void add(E value, int index) {
         if(index > size) {
             throw new IndexOutOfBoundsException("index param " + index + " should by between 0 and " + size);
         }
@@ -32,8 +32,8 @@ public class LinkedList implements List, Iterable{
             add(value);
             return;
         }
-        Node newNode = new Node(value);
-        Node current = getNodeByIndex(index);
+        Node<E> newNode = new Node<E>(value);
+        Node<E> current = getNodeByIndex(index);
         newNode.next = current;
         newNode.prev = current.prev;
         current.prev = newNode;
@@ -46,9 +46,9 @@ public class LinkedList implements List, Iterable{
     }
 
 
-    public Object remove(int index) {
-        Node current = getNodeByIndex(index);
-        Object value;
+    public E remove(int index) {
+        Node<E> current = getNodeByIndex(index);
+        E value;
         if(size == 1) {
             value = head.value;
             clear();
@@ -70,12 +70,12 @@ public class LinkedList implements List, Iterable{
         return value;
     }
 
-    public Object get(int index) {
+    public E get(int index) {
         return getNodeByIndex(index).value;
     }
 
-    public Object set(Object value, int index) {
-        Node node = getNodeByIndex(index);
+    public E set(E value, int index) {
+        Node<E> node = getNodeByIndex(index);
         node.value = value;
         return node.value;
     }
@@ -93,12 +93,12 @@ public class LinkedList implements List, Iterable{
         return size == 0;
     }
 
-    public boolean contains(Object value) {
+    public boolean contains(E value) {
         return indexOf(value) >= 0;
     }
 
-    public int indexOf(Object value) {
-        Node current = head;
+    public int indexOf(E value) {
+        Node<E> current = head;
         for (int i = 0; i < size; i++) {
             if(Objects.equals(current.value, value)){
                 return i;
@@ -109,7 +109,7 @@ public class LinkedList implements List, Iterable{
     }
 
     public int lastIndexOf(Object value) {
-        Node current = tail;
+        Node<E> current = tail;
         for (int i = size-1; i >= 0; i--) {
             if(Objects.equals(current.value, value)){
                 return i;
@@ -121,8 +121,8 @@ public class LinkedList implements List, Iterable{
 
     @Override
     public String toString() {
-        Node node = head;
-        StringJoiner stringJoiner = new StringJoiner(",", "LinkedList [", "]");
+        Node<E> node = head;
+        StringJoiner stringJoiner = new StringJoiner(", ", "LinkedList [", "]");
         for (int i = 0; i < size; i++) {
             stringJoiner.add(node.value.toString());
             node = node.next;
@@ -130,8 +130,8 @@ public class LinkedList implements List, Iterable{
         return stringJoiner.toString();
     }
 
-    private Node getNodeFromHead(int index) {
-        Node current = head;
+    private Node<E> getNodeFromHead(int index) {
+        Node<E> current = head;
         for (int i = 1; i <= index; i++) {
             current = current.next;
         }
@@ -139,14 +139,14 @@ public class LinkedList implements List, Iterable{
     }
 
     private Node getNodeFromTail(int index) {
-        Node current = tail;
+        Node<E> current = tail;
         for (int i = size-2; i >= index; i--) {
             current = current.prev;
         }
         return current;
     }
 
-    private Node getNodeByIndex(int index) {
+    private Node<E> getNodeByIndex(int index) {
         if(index >= size) {
             throw new IndexOutOfBoundsException("index param " + index + " should by between 0 and " + (size-1));
         }
@@ -165,7 +165,7 @@ public class LinkedList implements List, Iterable{
     }
 
     private class MyIterator implements Iterator {
-        Node current;
+        Node<E> current;
         int i = 0;
         @Override
         public boolean hasNext() {
@@ -177,23 +177,23 @@ public class LinkedList implements List, Iterable{
         }
 
         @Override
-        public Object next() {
+        public E next() {
             if(current == null) {
                 current = head;
             }
-            Node node = current;
+            Node<E> node = current;
             current = current.next;
             i++;
             return node.value;
         }
     }
 
-    private static class Node {
-        Object value;
-        Node prev;
-        Node next;
+    private static class Node<E> {
+        E value;
+        Node<E> prev;
+        Node<E> next;
 
-        public Node(Object value){
+        public Node(E value){
             this.value = value;
         }
     }

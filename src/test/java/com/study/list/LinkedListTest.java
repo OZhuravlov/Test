@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 public class LinkedListTest {
     @Test
     public void testAddAndGetAndRemove() {
-        List linkedList = new LinkedList();
+        List<String> linkedList = new LinkedList<>();
         linkedList.add("A");
         linkedList.add("B");
         linkedList.add("C");
@@ -31,7 +31,7 @@ public class LinkedListTest {
 
     @Test
     public void testAddAndGetByIndex() {
-        List linkedList = new LinkedList();
+        List<String> linkedList = new LinkedList<>();
         linkedList.add("A");
         linkedList.add("B");
         linkedList.add("C");
@@ -47,20 +47,20 @@ public class LinkedListTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testRemoveNonExistingElement() {
-        List linkedList = new LinkedList();
+        List<String> linkedList = new LinkedList<>();
         linkedList.add("A");
         linkedList.remove(1);
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testRemoveOnEmptyList() {
-        List linkedList = new LinkedList();
+        List<String> linkedList = new LinkedList<>();
         linkedList.remove(0);
     }
 
     @Test
     public void testAddAndSet() {
-        List linkedList = new LinkedList();
+        List<String> linkedList = new LinkedList<>();
         linkedList.add("A");
         linkedList.add("B");
         linkedList.add("C");
@@ -72,7 +72,7 @@ public class LinkedListTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testClear() {
-        List linkedList = new LinkedList();
+        List<String> linkedList = new LinkedList<>();
         linkedList.add("A");
         linkedList.add("B");
         linkedList.add("C");
@@ -84,7 +84,7 @@ public class LinkedListTest {
 
     @Test
     public void testIsEmply() {
-        List linkedList = new LinkedList();
+        List<String> linkedList = new LinkedList<>();
         assertTrue("isEmpty", linkedList.isEmpty());
         linkedList.add("A");
         assertFalse("isNotEmpty", linkedList.isEmpty());
@@ -92,7 +92,7 @@ public class LinkedListTest {
 
     @Test
     public void testContains() {
-        List linkedList = new LinkedList();
+        List<String> linkedList = new LinkedList<>();
         linkedList.add("A");
         linkedList.add("B");
         linkedList.add("C");
@@ -104,7 +104,7 @@ public class LinkedListTest {
 
     @Test
     public void testIndexOf() {
-        List linkedList = new LinkedList();
+        List<String> linkedList = new LinkedList<>();
         linkedList.add("A");
         linkedList.add("B");
         linkedList.add("B");
@@ -116,7 +116,7 @@ public class LinkedListTest {
 
     @Test
     public void testLastIndexOf() {
-        List linkedList = new LinkedList();
+        List<String> linkedList = new LinkedList<>();
         linkedList.add("A");
         linkedList.add("B");
         linkedList.add("B");
@@ -128,7 +128,7 @@ public class LinkedListTest {
 
     @Test
     public void testToString() {
-        List linkedList = new LinkedList();
+        List<String> linkedList = new LinkedList<>();
         linkedList.add("A");
         linkedList.add("B");
         linkedList.add("C");
@@ -138,7 +138,7 @@ public class LinkedListTest {
 
     @Test
     public void testIteration() {
-        LinkedList linkedList = new LinkedList();
+        List<String> linkedList = new LinkedList<>();
         linkedList.add("A");
         linkedList.add("B");
         linkedList.add("C");
